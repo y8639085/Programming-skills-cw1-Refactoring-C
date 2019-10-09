@@ -15,8 +15,8 @@ int main(void) {
     float rho;		// density, 0 <= rho <= 1
     int seed;		// for random number generator
     int MAX;		// the number of clusters to output to the PGM file
-    char* datafile;	// data file name
-    char* percfile;	// PGM file name
+    char* dataFile;	// data file name
+    char* percFile;	// PGM file name
 
     /* get input from keyboard by user */
     printf("Type in map width and height: \n");
@@ -29,22 +29,22 @@ int main(void) {
     scanf("%d", &seed);
 
     printf("Type in data file name: \n");
-    scanf("%s", &datafile);
+    scanf("%s", &dataFile);
     printf("Type in PGM file name: \n");
-    scanf("%s", &percfile);
+    scanf("%s", &percFile);
 
     map = (int**)arralloc(sizeof(int), 2, L + 2, L + 2);
 
 /*
     char* buffer1 = (char*)malloc(512);
     char* buffer2 = (char*)malloc(512);
-    strcpy(buffer1, datafile);
-    strcpy(buffer2, datafile);
+    strcpy(buffer1, dataFile);
+    strcpy(buffer2, dataFile);
     strcat(buffer1, ".dat");
     strcat(buffer2, ".pgm");
 */
-    datafile = "map.dat";
-    percfile = "map.pgm";
+    dataFile = "map.dat";
+    percFile = "map.pgm";
     MAX = L * L;
 
     rinit(seed);	// generate random number
@@ -114,34 +114,34 @@ int main(void) {
         }
     }
 
-    int itop, ibot, percclusternum;
+    int itop, ibot, percClusterNum;
     int percs = 0;
-    percclusternum = 0;
+    percClusterNum = 0;
     for (itop=1; itop<=L; itop++) {
         if (map[itop][L] > 0) {
             for (ibot=1; ibot<=L; ibot++) {
                 if (map[itop][L] == map[ibot][1]) {
                     percs = 1;
-                    percclusternum = map[itop][L];
+                    percClusterNum = map[itop][L];
                 }
             }
         }
     }
     if (percs)
-        printf("Cluster DOES percolate. Cluster number: %d\n", percclusternum);
+        printf("Cluster DOES percolate. Cluster number: %d\n", percClusterNum);
     else
         printf("Cluster DOES NOT percolate\n");
 
     FILE* fp;
 
-    writeDatafile(fp, map, datafile, L);
-    writePercfile(fp, map, L, MAX, percfile);
+    writeDatafile(fp, map, dataFile, L);
+    writePercfile(fp, map, L, MAX, percFile);
 }
 
-void writeDatafile(FILE* fp, int** map, char* datafile, int L) {
+void writeDatafile(FILE* fp, int** map, char* dataFile, int L) {
     int i, j;
-    printf("Opening file <%s>\n", datafile);
-    fp = fopen(datafile, "w");
+    printf("Opening file <%s>\n", dataFile);
+    fp = fopen(dataFile, "w");
     printf("Writing data ...\n");
     for (j = L; j >= 1; j--) {
         for (i = 1; i <= L; i++) {
@@ -154,42 +154,42 @@ void writeDatafile(FILE* fp, int** map, char* datafile, int L) {
     printf("File closed\n");
 }
 
-void writePercfile(FILE* fp, int** map, int L, int MAX, char* percfile) {
-    int ncluster, maxsize;
-    struct cluster *clustlist;
+void writePercfile(FILE* fp, int** map, int L, int MAX, char* percFile) {
+    int nCluster, maxSize;
+    struct cluster *clustList;
     int colour;
     int *rank;
     int i, j;
-    clustlist = (struct cluster*)arralloc(sizeof(struct cluster), 1, L*L);
+    clustList = (struct cluster*)arralloc(sizeof(struct cluster), 1, L*L);
     rank = (int*)arralloc(sizeof(int), 1, L*L);
     for (i=0; i < L*L; i++) {
         rank[i] = -1;
-        clustlist[i].size = 0;
-        clustlist[i].id   = i+1;
+        clustList[i].size = 0;
+        clustList[i].id   = i+1;
     }
     for (i=1;i<=L; i++) {
         for (j=1; j<=L; j++) {
             if (map[i][j] != 0) {
-                ++(clustlist[map[i][j]-1].size);
+                ++(clustList[map[i][j]-1].size);
             }
         }
     }
-    percsort(clustlist, L*L);
-    maxsize = clustlist[0].size;
-    for (ncluster=0; ncluster < L*L && clustlist[ncluster].size > 0; ncluster++);   // ？？？？？？？
-    if (MAX > ncluster) {
-        MAX = ncluster;
+    percsort(clustList, L*L);
+    maxSize = clustList[0].size;
+    for (nCluster=0; nCluster < L*L && clustList[nCluster].size > 0; nCluster++);   // ？？？？？？？
+    if (MAX > nCluster) {
+        MAX = nCluster;
     }
-    for (i=0; i < ncluster; i++) {
-        rank[clustlist[i].id - 1] = i;
+    for (i=0; i < nCluster; i++) {
+        rank[clustList[i].id - 1] = i;
     }
-    printf("Opening file <%s>\n", percfile);
-    fp = fopen(percfile, "w");
+    printf("Opening file <%s>\n", percFile);
+    fp = fopen(percFile, "w");
     printf("Map has %d clusters, maximum cluster size is %d\n",
-    ncluster, maxsize);
+    nCluster, maxSize);
     if (MAX == 1)
         printf("Displaying the largest cluster\n");
-    else if (MAX == ncluster)
+    else if (MAX == nCluster)
         printf("Displaying all clusters\n");
     else
         printf("Displaying the largest %d clusters\n", MAX);
@@ -217,13 +217,13 @@ void writePercfile(FILE* fp, int** map, int L, int MAX, char* percfile) {
     printf("...done\n");
     fclose(fp);
     printf("File closed\n");
-    free(clustlist);
+    free(clustList);
     free(rank);
 
     free(map);
 }
 
-static int clustcompare(const void *p1, const void *p2) {
+static int clustCompare(const void *p1, const void *p2) {
     int size1, size2, id1, id2;
 
     size1 = ((struct cluster *) p1)->size;
@@ -239,7 +239,7 @@ static int clustcompare(const void *p1, const void *p2) {
 }
 
 void percsort(struct cluster *list, int n) {
-    qsort(list, (size_t) n, sizeof(struct cluster), clustcompare);
+    qsort(list, (size_t) n, sizeof(struct cluster), clustCompare);
 }
 
 
