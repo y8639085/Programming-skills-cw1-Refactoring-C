@@ -62,7 +62,7 @@ int main(void) {
     nfill = 0;
     for (i=1; i<=L; i++) {
       for (j=1; j<=L; j++) {
-          r=random_uniform();    // generate a random number, if r > rho then let the square be filled
+          r=random_uniform();    // generate a random number, if r > rho then let the square be filled.
           if(r > rho) {
               nfill++;
               map[i][j]=1;
@@ -132,89 +132,10 @@ int main(void) {
     else
         printf("Cluster DOES NOT percolate\n");
 
-    /* write data into .dat file */
-//    printf("Opening file <%s>\n", datafile);
-    FILE *fp;
-/*    fp = fopen(datafile, "w");
-    printf("Writing data ...\n");
-    for (j=L; j>=1; j--) {
-        for (i=1;i<=L; i++) {
-            fprintf(fp, " %4d", map[i][j]);
-        }
-        fprintf(fp,"\n");
-    }
-    printf("...done\n");
-    fclose(fp);
-    printf("File closed\n");*/
+    FILE* fp;
 
     writeDatafile(fp, map, datafile, L);
     writePercfile(fp, map, L, MAX, percfile);
-    /* write data into .pgm file */
-    /*    int ncluster, maxsize;
-    struct cluster *clustlist;
-    int colour;
-    int *rank;
-    clustlist = (struct cluster*)arralloc(sizeof(struct cluster), 1, L*L);
-    rank = (int*)arralloc(sizeof(int), 1, L*L);
-    for (i=0; i < L*L; i++) {
-        rank[i] = -1;
-        clustlist[i].size = 0;
-        clustlist[i].id   = i+1;
-    }
-    for (i=1;i<=L; i++) {
-        for (j=1; j<=L; j++) {
-            if (map[i][j] != 0) {
-                ++(clustlist[map[i][j]-1].size);
-            }
-        }
-    }
-    percsort(clustlist, L*L);
-    maxsize = clustlist[0].size;
-    for (ncluster=0; ncluster < L*L && clustlist[ncluster].size > 0; ncluster++);   // ？？？？？？？
-    if (MAX > ncluster) {
-        MAX = ncluster;
-    }
-    for (i=0; i < ncluster; i++) {
-        rank[clustlist[i].id - 1] = i;
-    }
-    printf("Opening file <%s>\n", percfile);
-    fp = fopen(percfile, "w");
-    printf("Map has %d clusters, maximum cluster size is %d\n",
-    ncluster, maxsize);
-    if (MAX == 1)
-        printf("Displaying the largest cluster\n");
-    else if (MAX == ncluster)
-        printf("Displaying all clusters\n");
-    else
-        printf("Displaying the largest %d clusters\n", MAX);
-
-    printf("Writing data ...\n");
-    fprintf(fp, "P2\n");
-    if (MAX > 0)
-        fprintf(fp, "%d %d\n%d\n", L, L, MAX);
-    else
-        fprintf(fp, "%d %d\n%d\n", L, L, 1);
-    for (j=L; j>=1; j--) {
-        for (i=1;i<=L; i++) {
-            colour = map[i][j];
-            if (map[i][j] > 0) {
-                colour = rank[map[i][j]-1];
-                if (colour >= MAX)
-                    colour = MAX;
-            }
-            else
-                colour = MAX;
-            fprintf(fp, " %4d", colour);
-        }
-        fprintf(fp,"\n");
-    }
-    printf("...done\n");
-    fclose(fp);
-    printf("File closed\n");
-    free(clustlist);
-    free(rank);
-
-    free(map);*/
 }
 
 void writeDatafile(FILE* fp, int** map, char* datafile, int L) {
