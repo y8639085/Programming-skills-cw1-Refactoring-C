@@ -28,23 +28,15 @@ int main(void) {
     printf("Type in seed: \n");
     scanf("%d", &seed);
 
-    printf("Type in data file name: \n");
-    scanf("%s", &dataFile);
-    printf("Type in PGM file name: \n");
-    scanf("%s", &percFile);
+    printf("Type in data file name:(please end with a suffix .dat) \n");
+    dataFile = (char*)malloc(sizeof(char) * 100);
+    scanf("%s", dataFile);
+    printf("Type in PGM file name:(please end with a suffix .pgm) \n");
+    percFile = (char*)malloc(sizeof(char) * 100);
+    scanf("%s", percFile);
 
     map = (int**)arralloc(sizeof(int), 2, L + 2, L + 2);
 
-/*
-    char* buffer1 = (char*)malloc(512);
-    char* buffer2 = (char*)malloc(512);
-    strcpy(buffer1, dataFile);
-    strcpy(buffer2, dataFile);
-    strcat(buffer1, ".dat");
-    strcat(buffer2, ".pgm");
-*/
-    dataFile = "map.dat";
-    percFile = "map.pgm";
     MAX = L * L;
 
     rinit(seed);	// generate random number
