@@ -35,4 +35,4 @@ $(EXE):	$(OBJ)
 $(OBJ):	$(MF) $(INC)
 
 clean:
-		rm -f $(OBJ) $(EXE) core
+		rm -f $(OBJ) core
