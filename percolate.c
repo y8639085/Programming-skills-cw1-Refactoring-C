@@ -10,7 +10,7 @@ void writeDatafile(FILE* fp, int** map, char* datafile, int L);
 void writePercfile(FILE* fp, int** map, int L, int MAX, char* percfile);
 void percolate(int L, int** map, float rho);
 
-int main(void) {
+int main(int argc, char* argv[]) {
     int L;		// map width and height. L >= 1
     int** map;		// two-dimensional array
     float rho;		// density, 0 <= rho <= 1
@@ -19,22 +19,16 @@ int main(void) {
     char* dataFile;	// data file name
     char* percFile;	// PGM file name
 
-    /* get input from keyboard by user */
-    printf("Type in map width and height: \n");
-    scanf("%d", &L);
+    if (argc == 1) {
+        printf("Please input all arguments correctly!\n");
+	exit(0);
+    }
 
-    printf("Type in rho: \n");
-    scanf("%f", &rho);
-
-    printf("Type in seed: \n");
-    scanf("%d", &seed);
-
-    printf("Type in data file name:(please end with a suffix .dat) \n");
-    dataFile = (char*)malloc(sizeof(char) * 100);
-    scanf("%s", dataFile);
-    printf("Type in PGM file name:(please end with a suffix .pgm) \n");
-    percFile = (char*)malloc(sizeof(char) * 100);
-    scanf("%s", percFile);
+    L = atoi(argv[1]);
+    rho = atof(argv[2]);
+    seed = atoi(argv[3]);
+    dataFile = argv[4];
+    percFile = argv[5];
 
     map = (int**)arralloc(sizeof(int), 2, L + 2, L + 2);
 
