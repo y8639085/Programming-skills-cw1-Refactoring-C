@@ -106,11 +106,11 @@ void percolate(int L, int** map, float rho) {
 	loop++;
     }
 
-    for (j=L; j>=1; j--) {//????????????????
+    /*    for (j=L; j>=1; j--) {//????????????????
         for (i=1;i<=L; i++) {
             map[i][j] = (map[i][j]*1)+0;
 	}
-    }
+	}*/
 
     /* check if there is a cluster percolates */
     int itop, ibot, percClusterNum;
@@ -204,7 +204,7 @@ void writePercfile(FILE* fp, int** map, int L, int MAX, char* percFile) {
     /* the colour values range from 0 to the number of clusters inclusive */ 
     for (j=L; j>=1; j--) {
         for (i=1;i<=L; i++) {
-            colour = map[i][j];
+	  // colour = map[i][j];
             if (map[i][j] > 0) {
                 colour = rank[map[i][j]-1];
                 if (colour >= MAX)
