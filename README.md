@@ -1,12 +1,19 @@
 # Documentation of Percolation
 
-## The program solves the percolate problem.
+## Introduction
+The program solves the percolate problem. This is a modified version which includes:
++ Clean up and refactor the source code
++ Allow the user to specify the necessafy values in command line
++ Build script
++ Documentation
 
+## Source files
 The source files includes: arralloc.c arralloc.h percolate.c
 percolate.h uni.c uni.h, and a Makefile for compiling and linking all the source files.
 
 The main logic is in "percolate.c".
 
+## Compiling and running
 To compile and run it, users need to input "make" in the
 command line to invoke "Makefile", then input "make clean" 
 to delete all the auto-generated files created during compilation.
@@ -18,6 +25,7 @@ the value of seed(seed), data file name and PGM file name.)
 Users should input them in the command line in a specific order.
 For example, ./percolate 20 0.4 1564 map.dat map.pgm
 
+## Result
 Then this program will run and show you whether it percolates or not.
 After that it will generate two files named "map.dat" which shows the map the user created,
 and "map.pgm" which shows all the clusters.
