@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #include "arralloc.h"
 #include "uni.h"
 #include "percolate.h"
@@ -19,9 +19,46 @@ int main(int argc, char* argv[]) {
     char* dataFile;	// data file name
     char* percFile;	// PGM file name
 
-    if (argc == 1) {
+    if (argc != 6) {
         printf("Please input all arguments correctly!\n");
-	exit(0);
+        exit(1);
+    }
+
+    int len = strlen(argv[1]);
+    int i, j = 0;
+    for (i = 0; i < len; i++) {
+        if(argv[1][i] <= 57 && argv[1][i] >= 48)
+            j++;
+    }
+    if (j != len) {
+        printf("Please input an integer for length!\n");
+        exit(1);
+    }
+
+    if (argv[2][0] != 48 || argv[2][1] != 46) {
+        printf("Please input a float number between 0 and 1 for rho!\n");
+        exit(1);
+    }
+    j = 0;
+    len = strlen(argv[2]);
+    for (i = 2; i < len; i++) {
+        if (argv[2][i] <= 57 && argv[2][i] >= 48)
+	    j++;
+    }
+    if (j != len - 2) {
+        printf("Please input a float number between 0 and 1 for rho!\n");
+	exit(1);
+    }
+
+    j = 0;
+    len = strlen(argv[3]);
+    for (i = 0; i< len; i++) {
+        if (argv[3][i] <= 57 && argv[3][i] >= 48)
+	    j++;
+    }
+    if (j != len) {
+        printf("Please input an integer for seed!\n");
+        exit(1);
     }
 
     L = atoi(argv[1]);
