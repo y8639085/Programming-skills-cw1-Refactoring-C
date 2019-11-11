@@ -29,10 +29,9 @@ It will require users to specify key variables in this program:
 + The value of density(rho),
 + The value of seed(seed),
 + Data file name and PGM file name.
++ Maximum number of clusters in PGM file(MAX)
 Users should input them in the command line in a specific order.
 For example, ./percolate 20 0.4 1564 map.dat map.pgm
-If not specify, there is a set of default values which are 20(L), 0.4(rho), 1564(seed), map.dat map.pgm
-and this is an example which can percolate.
 
 After that your results will be stored in two files named "map.dat" and "map.pgm", the first one is the
 initial map generated, the last one is the result map with clusterings after percolating whether it was successful or not.

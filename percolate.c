@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     char* dataFile;	// data file name
     char* percFile;	// PGM file name
 
-    if (argc != 6) {
+    if (argc != 7) {
         printf("Please input all arguments correctly!\n");
         exit(1);
     }
@@ -52,12 +52,23 @@ int main(int argc, char* argv[]) {
 
     j = 0;
     len = strlen(argv[3]);
-    for (i = 0; i< len; i++) {
+    for (i = 0; i < len; i++) {
         if (argv[3][i] <= 57 && argv[3][i] >= 48)
 	    j++;
     }
     if (j != len) {
         printf("Please input an integer for seed!\n");
+        exit(1);
+    }
+
+    j = 0;
+    len = strlen(argv[6]);
+    for (i = 0; i < len; i++) {
+        if (argv[6][i] <= 57 && argv[6][i] >= 48)
+	  j++;
+    }
+    if (j != len) {
+        printf("Please input an integer for MAX\n");
         exit(1);
     }
 
@@ -69,7 +80,7 @@ int main(int argc, char* argv[]) {
 
     map = (int**)arralloc(sizeof(int), 2, L + 2, L + 2);
 
-    MAX = L * L;
+    MAX = atoi(argv[6]);
 
     rinit(seed);	// generate random number
 
