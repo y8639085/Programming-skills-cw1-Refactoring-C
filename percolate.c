@@ -25,7 +25,6 @@ char* dataFile; 	// data file name
 char* percFile;	        // PGM file name
 FILE* fp;
 
-
 int main(int argc, char* argv[]) {
 
     // inspect command line arguments
@@ -135,10 +134,10 @@ void create_map() {
     for (i=1; i<=L; i++) {
         for (j=1; j<=L; j++) {
 	    r=random_uniform();
-	        if(r > rho) {
-                    nEmpty++;
-                    map[i][j]=1;
-	        }
+	    if(r > rho) {
+	        nEmpty++;
+                map[i][j]=1;
+	    }
 	}
     }
 

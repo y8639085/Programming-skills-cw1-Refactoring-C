@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
-#include <CUint/Basic.h>
+#include <CUnit/Basic.h>
+//#include <CUnit/CUnit.h>
 #include "percolate.c"
 
 static int suite_init(void) {
@@ -11,11 +12,11 @@ static int suite_clean(void) {
   return 0;
 }
 
-static test_xx() {
-
+static test_create_map() {
+  //  CU_ASSERT_EQUAL();
 }
 
-int main(int argc, char* argv[]) {
+int cu_tests(void) {
   CU_pSuite pSuite = NULL;
 
   /* initialize the CUnit test registry */
@@ -30,23 +31,28 @@ int main(int argc, char* argv[]) {
   assert(!CU_is_test_running());
 
   /* add a suite to the registry */
-  pSuite = CU_add_suite("suite_xx", suite_init, suite_clean);
+  pSuite = CU_add_suite("suite_percolate", suite_init, suite_clean);
   if (NULL == pSuite) {
     CU_cleanup_registry();
     return CU_get_error();
   }
 
   /* add the tests to the suite */
-  if ((NULL == CU_add_test(pSuite, "test_xx", test_xx))) {
+  if (NULL == CU_add_test(pSuite, "test_xx", test_xx)) {
     CU_cleanup_registry();
     return CU_get_error();
   }
 
   /* run all tests using the CUnit Basic interface */
-  CU_basic_set_mode(CU_BRM_VERBOSE)；
+  CU_basic_set_mode(CU_BRM_VERBOSE);
   CU_basic_run_tests();
 
   /* clean up registry and return */
   CU_cleanup_registry();
   return CU_get_error();
+}
+
+int main(int argc, char* argv[]) {
+  cu_tests();
+  return 0;
 }
