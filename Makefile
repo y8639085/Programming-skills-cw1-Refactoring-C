@@ -1,38 +1,60 @@
-MF=	Makefile
+# Copyright 2014-2015 The University of Edinburgh.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+# implied. See the License for the specific language governing
+# permissions and limitations under the License.
 
-#COMPILER
-CC=	gcc
+CC=	gcc -O3
+LDFLAGS=-lcunit
+CFLAGS= -g
+LFLAGS= -lm
 
-CFLAGS=	-g
-LFLAGS=	-lm
+SRCDIR= src
+TESTDIR= test
+INC=	-I$(SRCDIR) -I$(TESTDIR) -I$(HOME)/include
 
-EXE=	percolate
+OBJS=	uni.o \
+	arralloc.o
+TESTS=	percolate_cunit_test.o
 
-SRC= \
-		arralloc.c	\
-		percolate.c	\
-		uni.c
-		
+percolate: $(OBJS) percolate.o
+	$(CC) -o $@ $^ $(INC) $(CFLAGS) $(LFLAGS)
 
-INC= \
-		arralloc.h	\
-		percolate.h	\
-		uni.h
+percolate-tests: $(TESTS) $(OBJS) cunit_test_driver.o
+	$(CC) -o $@ $^ $(INC) $(LDFLAGS)
 
-.SUFFIXES:
-.SUFFIXES: .c .o
+%.o : $(SRCDIR)/%.c
+	$(CC) -c $^ -o $@ $(INC)
+%.o : $(TESTDIR)/%.c
+	$(CC) -c $< -o $@ $(INC)
 
-OBJ=	$(SRC:.c=.o)
+.PHONY : xunit-report
+xunit-report :
+	xsltproc -novalid cunit-to-junit.xsl CUnitAutomated-Results.xml > TestResults.xml
 
-.c.o:
-		$(CC) $(CFLAGS) -c $<
+.PHONY : test
+test : percolate-tests
+	./$<
 
-all:	$(EXE)
+.PHONY : all
+all : percolate test
 
-$(EXE):	$(OBJ)
-		$(CC) $(CFLAGS) -o $@ $(OBJ) $(LFLAGS)
-
-$(OBJ):	$(MF) $(INC)
-
-clean:
-		rm -f $(OBJ) core
+.PHONY : clean
+clean :
+	rm -f percolate
+	rm -f percolate-tests
+	rm -f map.*
+	rm -f CUnit*.xml
+	rm -f TestResults.xml
+	rm -f *.o
+	rm -f *~
+	rm -f src/*~
+	rm -f test/*~
