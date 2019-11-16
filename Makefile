@@ -22,8 +22,8 @@ TESTDIR= test
 INC=	-I$(SRCDIR) -I$(TESTDIR) -I$(HOME)/include
 
 OBJS=	percolate.o \
-	uni.o \
-	arralloc.o
+	arralloc.o \
+	uni.o
 TESTS=	percolate_cunit_test.o
 
 percolate: $(OBJS) percolate_program.o
