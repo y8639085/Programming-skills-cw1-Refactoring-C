@@ -85,31 +85,3 @@ int main(int argc, char* argv[]) {
     writeDatafile(L, map, dataFile, fp);
     writePercfile(L, MAX, map, percFile, fp);
 }
-
-/* compare two items */
-/*static int clustCompare(const void *p1, const void *p2) {
-    int size1, size2, id1, id2;
-
-    size1 = ((struct cluster *) p1)->size;
-    size2 = ((struct cluster *) p2)->size;
-
-    id1   = ((struct cluster *) p1)->id;
-    id2   = ((struct cluster *) p2)->id;
-
-    if (size1 != size2)
-        return(size2 - size1);
-    else
-        return(id2 - id1);
-}*/
-
-/**
- * Compare two clusters using buint-in function in c library
- *
- * list: pointer of the first item
- * n: number of the items
- * clustCompare: callback funtion 
-**/
-/*void percsort(struct cluster *list, int n) {
-    qsort(list, (size_t) n, sizeof(struct cluster), clustCompare);
-}
-*/
