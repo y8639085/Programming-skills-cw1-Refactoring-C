@@ -25,7 +25,7 @@ int main() {
   }
 
   /* add the tests to the suite */
-  if ((NULL == CU_add_test(pSuite, "test_1", test_1)) ||
+  if ((NULL == CU_add_test(pSuite, "test_create_map", test_create_map)) ||
       (NULL == CU_add_test(pSuite, "test_2", test_2)) ||
       (NULL == CU_add_test(pSuite, "test_3", test_3))) {
     CU_cleanup_registry();
@@ -37,7 +37,8 @@ int main() {
   CU_basic_set_mode(CU_BRM_VERBOSE);
   CU_basic_run_tests();
 
-  /* Run all tests using CUnit Automated interface which outputs
+  /*
+   * Run all tests using CUnit Automated interface which outputs
    * resuls to a file, default name CUnitAutomated-Results.xml.
    * DTD CUnit-Run.dtd and XSL stylesheet CUnit-Run.xsl in share/
    * Uncomment this line to override default output file prefix.
@@ -45,7 +46,8 @@ int main() {
    */
   CU_list_tests_to_file();
 
-  /* Output listing of tests in suites to a file, default name
+  /*
+   * Output listing of tests in suites to a file, default name
    * CUnitAutomated-Listing.xml
    * DTD Cunit-List.dtd and XSL stylesheet CUnit-List.xsl in share/
    */

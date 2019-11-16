@@ -1,31 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "arralloc.h"
 #include "uni.h"
 #include "percolate.h"
 
-// function declarations
-void solve_percolate();
-void create_map();
-void loop_map();
-void check_percolate();
-void writeDatafile();
-void writePercfile();
-void initialize_clusters(struct cluster* clustList, int* rank);
-void arrange_clusters(int nCluster, int maxSize, struct cluster* clustList, int* rank);
-void cluster_colour(int* rank);
+/*int main(int argc, char* argv[]) {
+    int L;		// map width and height. L >= 1
+    int** map;		// two-dimensional array
+    float rho;		// density, 0 <= rho <= 1
+    int seed;		// for random number generator
+    int MAX;		// the number of clusters to output to the PGM file
+    char* dataFile; 	// data file name
+    char* percFile;	// PGM file name
+    FILE* fp;
 
-int L;		        // map width and height. L >= 1
-int** map;		// two-dimensional array
-float rho;		// density, 0 <= rho <= 1
-int seed;		// for random number generator
-int MAX;		// the number of clusters to output to the PGM file
-char* dataFile; 	// data file name
-char* percFile;	        // PGM file name
-FILE* fp;
-
-int main(int argc, char* argv[]) {
 
     // inspect command line arguments
     if (argc != 7) {
@@ -93,11 +81,11 @@ int main(int argc, char* argv[]) {
     rinit(seed);	// generate random number
 
     printf("Parameters are rho=%f, L=%d, seed=%d\n", rho, L, seed);
-    solve_percolate();
+    solve_percolate(L, map, rho);
 
-    writeDatafile();
-    writePercfile();
-}
+    writeDatafile(L, map, dataFile, fp);
+    writePercfile(L, MAX, map, percFile, fp);
+}*/
 
 /**
  * This function contains the main logic
@@ -110,18 +98,18 @@ int main(int argc, char* argv[]) {
  * loop: number of loops
  * change: the number of values which were changed in last round
  **/
-void solve_percolate() {
+void solve_percolate(int L, int** map, float rho) {
     // create and initialize the map
-    create_map();
+    create_map(L, map, rho);
 
-    loop_map();
     /* Loop over all the squares in the grid many times and replace each 
        square with the maximum of its four neighbours. */
+    loop_map(L, map);
 
-    check_percolate();
+    check_percolate(L, map);
 }
 
-void create_map() {
+void create_map(int L, int** map, float rho) {
     int nEmpty;
     int i, j;
     float r;
@@ -155,7 +143,7 @@ void create_map() {
     }
 }
 
-void loop_map() {
+void loop_map(int L, int** map) {
     int loop, nchange, old, i, j;
     loop = 1;
     nchange = 1;
@@ -179,7 +167,7 @@ void loop_map() {
     }
 }
 
-void check_percolate() {
+void check_percolate(int L, int** map) {
     /* check if there is a cluster percolates */
     int itop, ibot, percClusterNum;
     int percs = 0;
@@ -201,7 +189,7 @@ void check_percolate() {
 }
 
 /* write the map into the data file */
-void writeDatafile() {
+void writeDatafile(int L, int** map, char* dataFile, FILE* fp) {
     int i, j;
     printf("Opening file <%s>\n", dataFile);
     fp = fopen(dataFile, "w");
@@ -218,7 +206,7 @@ void writeDatafile() {
 }
 
 /* write data into the PGM file */
-void writePercfile() {
+void writePercfile(int L, int MAX, int** map, char* percFile, FILE* fp) {
     int nCluster, maxSize;
     struct cluster *clustList;
     int *rank;
@@ -228,7 +216,7 @@ void writePercfile() {
     rank = (int*)arralloc(sizeof(int), 1, L*L);
 
     // initialize structs
-    initialize_clusters(clustList, rank);
+    initialize_clusters(L, map, clustList, rank);
 
     // sort all the clusters from large to small
     percsort(clustList, L*L);
@@ -239,8 +227,8 @@ void writePercfile() {
         MAX = nCluster;
     }
 
-    arrange_clusters(nCluster, maxSize, clustList, rank);
-    cluster_colour(rank);
+    arrange_clusters(L, nCluster, maxSize, MAX, clustList, rank, percFile, fp);
+    cluster_colour(L, MAX, map, rank, fp);
 
     printf("...done\n");
     fclose(fp);
@@ -251,7 +239,7 @@ void writePercfile() {
     free(map);
 }
 
-void initialize_clusters(struct cluster* clustList, int* rank) {
+void initialize_clusters(int L, int** map, struct cluster* clustList, int* rank) {
     int i, j;
     for (i=0; i < L*L; i++) {
         rank[i] = -1;
@@ -267,7 +255,7 @@ void initialize_clusters(struct cluster* clustList, int* rank) {
     }
 }
 
-void arrange_clusters(int nCluster, int maxSize, struct cluster* clustList, int* rank) {
+void arrange_clusters(int L, int nCluster, int maxSize, int MAX,  struct cluster* clustList, int* rank, char* percFile, FILE* fp) {
     int i, j;
     // arrange clusters from large to small
     for (i=0; i < nCluster; i++) {
@@ -292,7 +280,7 @@ void arrange_clusters(int nCluster, int maxSize, struct cluster* clustList, int*
         fprintf(fp, "%d %d\n%d\n", L, L, 1);
 }
 
-void cluster_colour(int* rank) {
+void cluster_colour(int L, int MAX, int** map, int* rank, FILE* fp) {
     /* the colour values range from 0 to the number of clusters inclusive */
     int i, j;
     int colour;

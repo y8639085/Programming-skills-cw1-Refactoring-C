@@ -8,8 +8,9 @@ int suite_clean(void) {
   return 0;
 }
 
-void test_1(void) {
-  //  CU_ASSERT_EQUAL();
+void test_create_map(void) {
+  create_map();
+  //  CU_ASSERT_EQUAL(nEmpty, 230);
 }
 
 void test_2(void) {

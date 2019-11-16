@@ -21,11 +21,12 @@ SRCDIR= src
 TESTDIR= test
 INC=	-I$(SRCDIR) -I$(TESTDIR) -I$(HOME)/include
 
-OBJS=	uni.o \
+OBJS=	percolate.o \
+	uni.o \
 	arralloc.o
 TESTS=	percolate_cunit_test.o
 
-percolate: $(OBJS) percolate.o
+percolate: $(OBJS) percolate_program.o
 	$(CC) -o $@ $^ $(INC) $(CFLAGS) $(LFLAGS)
 
 percolate-tests: $(TESTS) $(OBJS) cunit_test_driver.o

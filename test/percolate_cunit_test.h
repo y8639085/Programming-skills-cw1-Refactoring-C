@@ -20,7 +20,7 @@ int suite_clean(void);
 /*
  * Test
  */
-void test_1(void);
+void test_create_map(void);
 
 /*
  * Test
