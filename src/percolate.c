@@ -144,11 +144,11 @@ void writePercfile(int L, int MAX, int** map, char* percFile, FILE* fp) {
         MAX = nCluster;
     }
 
-    arrange_clusters(L, nCluster, maxSize, MAX, clustList, rank, percFile, fp);
-    cluster_colour(L, MAX, map, rank, fp);
+    arrange_clusters(L, map, nCluster, maxSize, MAX, clustList, rank, percFile, fp);
+    //    cluster_colour(L, MAX, map, rank, fp);
 
     printf("...done\n");
-    fclose(fp);
+    //    fclose(fp);
     printf("File closed\n");
     free(clustList);
     free(rank);
@@ -172,7 +172,7 @@ void initialize_clusters(int L, int** map, struct cluster* clustList, int* rank)
     }
 }
 
-void arrange_clusters(int L, int nCluster, int maxSize, int MAX,  struct cluster* clustList, int* rank, char* percFile, FILE* fp) {
+void arrange_clusters(int L, int** map, int nCluster, int maxSize, int MAX,  struct cluster* clustList, int* rank, char* percFile, FILE* fp) {
     int i, j;
     // arrange clusters from large to small
     for (i=0; i < nCluster; i++) {
@@ -195,11 +195,11 @@ void arrange_clusters(int L, int nCluster, int maxSize, int MAX,  struct cluster
         fprintf(fp, "%d %d\n%d\n", L, L, MAX); 
     else
         fprintf(fp, "%d %d\n%d\n", L, L, 1);
-}
+    /*}
 
-void cluster_colour(int L, int MAX, int** map, int* rank, FILE* fp) {
+      void cluster_colour(int L, int MAX, int** map, int* rank, FILE* fp) {*/
     /* the colour values range from 0 to the number of clusters inclusive */
-    int i, j;
+    //    int i, j;
     int colour;
     for (j=L; j>=1; j--) {
         for (i=1;i<=L; i++) {
@@ -216,6 +216,7 @@ void cluster_colour(int L, int MAX, int** map, int* rank, FILE* fp) {
         }
         fprintf(fp,"\n");
     }
+    fclose(fp);
 }
 
 /* compare two items */
