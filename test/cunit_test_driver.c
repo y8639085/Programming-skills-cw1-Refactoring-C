@@ -4,6 +4,12 @@
 #include "percolate_cunit_test.h"
 
 int main() {
+
+  int L;
+  L = 1;
+
+
+
   CU_pSuite pSuite = NULL;
 
   /* initialize the CUnit test registry */

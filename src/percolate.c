@@ -19,6 +19,8 @@ void solve_percolate(int L, int** map, float rho) {
     // create and initialize the map
     create_map(L, map, rho);
 
+    update_map(L, map);
+
     /* Loop over all the squares in the grid many times and replace each 
        square with the maximum of its four neighbours. */
     loop_map(L, map);
@@ -48,7 +50,11 @@ void create_map(int L, int** map, float rho) {
 
     printf("rho = %f, actual density = %f\n",
     rho, 1.0 - ((double) nEmpty)/((double) L*L) );    // show the density of 0
+}
 
+void update_map(int L, int** map) {
+    int i, j;
+    int nEmpty;
     nEmpty = 0;
     for (i=1; i<=L; i++) {
         for (j=1; j<=L; j++) {
@@ -58,6 +64,7 @@ void create_map(int L, int** map, float rho) {
             }
 	}
     }
+
 }
 
 void loop_map(int L, int** map) {
@@ -145,10 +152,8 @@ void writePercfile(int L, int MAX, int** map, char* percFile, FILE* fp) {
     }
 
     arrange_clusters(L, map, nCluster, maxSize, MAX, clustList, rank, percFile, fp);
-    //    cluster_colour(L, MAX, map, rank, fp);
 
     printf("...done\n");
-    //    fclose(fp);
     printf("File closed\n");
     free(clustList);
     free(rank);
@@ -195,15 +200,9 @@ void arrange_clusters(int L, int** map, int nCluster, int maxSize, int MAX,  str
         fprintf(fp, "%d %d\n%d\n", L, L, MAX); 
     else
         fprintf(fp, "%d %d\n%d\n", L, L, 1);
-    /*}
-
-      void cluster_colour(int L, int MAX, int** map, int* rank, FILE* fp) {*/
-    /* the colour values range from 0 to the number of clusters inclusive */
-    //    int i, j;
     int colour;
     for (j=L; j>=1; j--) {
         for (i=1;i<=L; i++) {
-	  // colour = map[i][j];
             if (map[i][j] > 0) {
                 colour = rank[map[i][j]-1];
                 if (colour >= MAX)
