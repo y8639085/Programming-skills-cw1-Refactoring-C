@@ -17,7 +17,9 @@
  **/
 void solve_percolate(int L, int** map, float rho) {
     // create and initialize the map
-    create_map(L, map, rho);
+    create_map(L, map);
+
+    initialize_map(L, map, rho);
 
     update_map(L, map);
 
@@ -28,15 +30,19 @@ void solve_percolate(int L, int** map, float rho) {
     check_percolate(L, map);
 }
 
-void create_map(int L, int** map, float rho) {
-    int nEmpty;
+void create_map(int L, int** map) {
     int i, j;
-    float r;
     for (i=0; i<L+2; i++) {      // initialise all the squares to be 0(gray)
         for (j=0; j<L+2; j++) {
 	    map[i][j] = 0;
         }
     }
+}
+
+void initialize_map(int L, int** map, float rho) {
+    int i, j;
+    int nEmpty;
+    float r;
     nEmpty = 0;
     for (i=1; i<=L; i++) {
         for (j=1; j<=L; j++) {
@@ -91,7 +97,7 @@ void loop_map(int L, int** map) {
     }
 }
 
-void check_percolate(int L, int** map) {
+int check_percolate(int L, int** map) {
     /* check if there is a cluster percolates */
     int itop, ibot, percClusterNum;
     int percs = 0;
@@ -106,10 +112,14 @@ void check_percolate(int L, int** map) {
             }
 	}
     }
-    if (percs)
+    if (percs) {
         printf("Cluster DOES percolate. Cluster number: %d\n", percClusterNum);
-    else
+	return percs;
+    }
+    else {
 	printf("Cluster DOES NOT percolate\n");
+	return percs;
+    }
 }
 
 /* write the map into the data file */

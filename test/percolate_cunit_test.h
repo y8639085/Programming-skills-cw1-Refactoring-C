@@ -25,11 +25,18 @@ void test_create_map(void);
 /*
  * Test
  */
-void test_2(void);
+void test_update_map(void);
 
 /*
  * Test
  */
-void test_3(void);
+void test_loop_map(void);
 
+void test_check_percolate(void);
+
+void test_writeDatafile(void);
+
+void test_initialize_clusters(void);
+
+void test_arrange_clusters(void);
 #endif

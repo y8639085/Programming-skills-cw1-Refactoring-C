@@ -27,8 +27,12 @@ int main() {
 
   /* add the tests to the suite */
   if ((NULL == CU_add_test(pSuite, "test_create_map", test_create_map)) ||
-      (NULL == CU_add_test(pSuite, "test_2", test_2)) ||
-      (NULL == CU_add_test(pSuite, "test_3", test_3))) {
+      (NULL == CU_add_test(pSuite, "test_update_map", test_update_map)) ||
+      (NULL == CU_add_test(pSuite, "test_loop_map", test_loop_map)) ||
+      (NULL == CU_add_test(pSuite, "test_check_percolate", test_check_percolate)) ||
+      (NULL == CU_add_test(pSuite, "test_writeDatafile", test_writeDatafile)) ||
+      (NULL == CU_add_test(pSuite, "test_initialize_clusters", test_initialize_clusters)) ||
+      (NULL == CU_add_test(pSuite, "test_arrange_clusters", test_arrange_clusters))) {
     CU_cleanup_registry();
     return CU_get_error();
   }
