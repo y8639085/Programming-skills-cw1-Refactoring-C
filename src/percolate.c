@@ -92,7 +92,7 @@ void loop_map(int L, int** map) {
                 }
 	    }
         }
-	printf("Number of changes on loop %d is %d\n", loop, nchange);
+       	printf("Number of changes on loop %d is %d\n", loop, nchange);
 	loop++;
     }
 }

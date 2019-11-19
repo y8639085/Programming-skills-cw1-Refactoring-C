@@ -39,6 +39,7 @@ clean :
 	rm -f percolate
 	rm -f percolate-tests
 	rm -f map.*
+	rm -f testlog.*
 	rm -f CUnit*.xml
 	rm -f TestResults.xml
 	rm -f *.o
