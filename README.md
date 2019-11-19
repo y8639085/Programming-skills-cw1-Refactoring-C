@@ -9,16 +9,17 @@ The program solves the percolate problem. This is a modified version which inclu
 
 ### Compilers and versions
 Compiler: gcc 4.8.5
-Flags: -g(add default debug information to compiled code)
-       -lm('-l' for link, '-m' for math libraries)
-       -lcunit(for cunit test)
+Flags:
++ -g(add default debug information to compiled code)
++ -lm('-l' for link, '-m' for math libraries)
++ -lcunit(for cunit test)
 
 ## Source files
 The source files in folder src includes: arralloc.c arralloc.h percolate.c
 percolate.h uni.c uni.h, and a Makefile for compiling and linking all the source files.
 
 ## Test files
-The cunit test files in folder test includes: cunit_test_driver.c percolate_cunit_test.c percolate_cunit_test.h
+The cunit test files in folder test includes: cunit_test_driver.c percolate_cunit_test.c percolate_cunit_test.h.
 In cunit_test_driver.c, it is the framework of cunit, including initialise and clean-up functions, test suite and test cases.
 In percolate_cunit_test.c, there are defination of test cases, including:
 
